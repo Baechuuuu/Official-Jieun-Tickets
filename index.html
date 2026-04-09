@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jieun Ticket Assistance — Proof Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { background:#050505; scroll-behavior:smooth; }
+  body { background:#080808; font-family:'DM Sans', sans-serif; color:#fff; min-height:100vh; }
+
+  /* ── STICKY NAV ── */
+  .site-nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(8,8,8,0.55);
+    backdrop-filter:blur(24px) saturate(160%); -webkit-backdrop-filter:blur(24px) saturate(160%);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    height:68px; display:flex; align-items:center;
+  }
+  .nav-inner {
+    width:100%; max-width:900px; margin:0 auto;
+    padding:0 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:26px; letter-spacing:3px; color:#fff;
+    text-decoration:none;
+  }
+  .nav-logo span { color:#FFD93D; }
+  .nav-links { display:flex; gap:4px; }
+  .nav-links a {
+    font-family:'Space Mono', monospace;
+    font-size:10px; letter-spacing:2.5px; text-transform:uppercase;
+    color:rgba(255,255,255,0.42); text-decoration:none;
+    padding:8px 16px; border-radius:2px;
+    border:1px solid transparent;
+    transition:all 0.18s;
+  }
+  .nav-links a:hover { color:#FFD93D; border-color:rgba(255,217,61,0.3); background:rgba(255,217,61,0.05); }
+  .nav-links a.active { color:#FFD93D; border-color:rgba(255,217,61,0.4); background:rgba(255,217,61,0.07); }
+
+  .nav-hamburger {
+    display:none; flex-direction:column; gap:5px; cursor:pointer;
+    background:none; border:none; padding:4px;
+  }
+  .nav-hamburger span { display:block; width:24px; height:2px; background:rgba(255,255,255,0.5); border-radius:2px; }
+  .nav-mobile-menu {
+    display:none; position:fixed; top:68px; left:0; right:0; z-index:99;
+    background:rgba(8,8,8,0.88); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+    border-bottom:1px solid rgba(255,255,255,0.07);
+    padding:16px 28px 20px; flex-direction:column; gap:4px;
+  }
+  .nav-mobile-menu a {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:2.5px;
+    color:rgba(255,255,255,0.5); text-decoration:none; padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,0.05); transition:color 0.18s;
+  }
+  .nav-mobile-menu a:hover { color:#FFD93D; }
+  @media (max-width:600px) {
+    .nav-links { display:none; }
+    .nav-hamburger { display:flex; }
+    .nav-mobile-menu.open { display:flex; }
+  }
+
+  /* ── PAGE WRAPPER ── */
+  .page { max-width:900px; margin:0 auto; padding:68px 0 60px; position:relative; overflow:hidden; }
+
+  /* subtle noise overlay */
+  .page::before {
+    content:''; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:0;
+  }
+
+  /* ── SPOTLIGHT ── */
+  .spotlight {
+    position:absolute; top:-100px; left:50%; transform:translateX(-50%);
+    width:900px; height:540px;
+    background:radial-gradient(ellipse at center, rgba(255,220,60,0.11) 0%, rgba(255,180,0,0.04) 42%, transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position:relative; z-index:1;
+    text-align:center; padding:64px 32px 36px;
+    border-bottom:1px solid rgba(255,255,255,0.07);
+  }
+  .eyebrow {
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:5px; color:#FFD93D;
+    text-transform:uppercase; margin-bottom:22px; opacity:0.9;
+  }
+  .main-title {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(80px,17vw,130px); letter-spacing:3px; color:#fff;
+    line-height:0.88; margin-bottom:4px;
+  }
+  .main-title .gold { color:#FFD93D; }
+  .subtitle { font-size:15px; color:rgba(255,255,255,0.42); letter-spacing:1.5px; font-weight:300; margin-top:16px; }
+  .est-badge {
+    display:inline-block; margin-top:24px;
+    background:rgba(255,217,61,0.1); border:1px solid rgba(255,217,61,0.35);
+    color:#FFD93D; font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2.5px; padding:9px 26px; border-radius:2px;
+  }
+
+  /* ── YEAR FILTER TABS ── */
+  .filter-row {
+    position:relative; z-index:1;
+    display:flex; gap:8px; justify-content:center; flex-wrap:wrap;
+    padding:30px 24px 0;
+  }
+  .filter-btn {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    padding:9px 20px; border-radius:2px; border:1px solid rgba(255,255,255,0.14);
+    background:transparent; color:rgba(255,255,255,0.38); cursor:pointer; transition:all 0.18s ease;
+  }
+  .filter-btn:hover { border-color:rgba(255,217,61,0.5); color:rgba(255,217,61,0.7); }
+  .filter-btn.active { border-color:#FFD93D; color:#FFD93D; background:rgba(255,217,61,0.08); }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    position:relative; z-index:1;
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:3px;
+    color:rgba(255,255,255,0.28); text-transform:uppercase; padding:26px 28px 14px;
+  }
+  .section-heading {
+    position:relative; z-index:1; padding:40px 28px 10px;
+    display:flex; align-items:center; gap:16px;
+  }
+  .section-heading::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.07); }
+  .section-heading-text { font-family:'Bebas Neue', sans-serif; font-size:32px; letter-spacing:2px; color:#fff; white-space:nowrap; }
+  .section-heading-text span { color:#FFD93D; }
+
+  /* ── PROOF ARCHIVE — year groups ── */
+  .proof-archive { position:relative; z-index:1; }
+  .year-group { margin-bottom:0; }
+  .year-group.hidden { display:none !important; }
+
+  /* year divider — colored label + fading rule */
+  .year-divider {
+    display:flex; align-items:center; gap:14px;
+    padding:28px 24px 12px;
+  }
+  .year-divider-label {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:22px; letter-spacing:5px; white-space:nowrap;
+    flex-shrink:0;
+  }
+  .year-divider-count {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px;
+    color:rgba(255,255,255,0.2); flex-shrink:0;
+  }
+  .year-divider::after {
+    content:''; flex:1; height:1px;
+  }
+
+  /* cards grid per year */
+  .year-cards {
+    display:grid; grid-template-columns:1fr 1fr 1fr;
+    gap:1px; background:rgba(255,255,255,0.055);
+    margin:0 24px; border:1px solid rgba(255,255,255,0.055);
+  }
+  @media (max-width:680px) { .year-cards { grid-template-columns:1fr 1fr; } }
+  @media (max-width:420px) { .year-cards { grid-template-columns:1fr; } }
+
+  .ticket {
+    background:#0f0f0f; padding:20px 22px;
+    position:relative; overflow:hidden; transition:background 0.18s;
+  }
+  .ticket::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    opacity:0.5; transition:opacity 0.18s;
+  }
+  .ticket:hover { background:#161616; }
+  .ticket:hover::before { opacity:1; }
+
+  .t-artist { font-family:'Bebas Neue', sans-serif; font-size:30px; letter-spacing:1px; color:#fff; line-height:1; margin-bottom:5px; }
+  .t-tour { font-size:11px; color:rgba(255,255,255,0.38); font-weight:300; line-height:1.5; margin-bottom:10px; }
+  .t-tier { display:inline-block; font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1px; padding:3px 10px; border-radius:1px; font-weight:700; }
+
+  /* ── ERA COLOUR TOKENS ── */
+  .y22 .year-divider-label { color:#FF6B6B; }
+  .y22 .year-divider::after { background:linear-gradient(to right, rgba(255,107,107,0.25), transparent); }
+  .y22 .ticket::before { background:#FF6B6B; }
+  .y22 .t-tier { background:rgba(255,107,107,0.12); color:#FF6B6B; border:1px solid rgba(255,107,107,0.25); }
+
+  .y23 .year-divider-label { color:#4ECDC4; }
+  .y23 .year-divider::after { background:linear-gradient(to right, rgba(78,205,196,0.25), transparent); }
+  .y23 .ticket::before { background:#4ECDC4; }
+  .y23 .t-tier { background:rgba(78,205,196,0.12); color:#4ECDC4; border:1px solid rgba(78,205,196,0.25); }
+
+  .y24 .year-divider-label { color:#A78BFA; }
+  .y24 .year-divider::after { background:linear-gradient(to right, rgba(167,139,250,0.25), transparent); }
+  .y24 .ticket::before { background:#A78BFA; }
+  .y24 .t-tier { background:rgba(167,139,250,0.12); color:#A78BFA; border:1px solid rgba(167,139,250,0.25); }
+
+  .y25 .year-divider-label { color:#FFD93D; }
+  .y25 .year-divider::after { background:linear-gradient(to right, rgba(255,217,61,0.25), transparent); }
+  .y25 .ticket::before { background:#FFD93D; }
+  .y25 .t-tier { background:rgba(255,217,61,0.12); color:#FFD93D; border:1px solid rgba(255,217,61,0.25); }
+
+  .y26 .year-divider-label { color:#FF9F43; }
+  .y26 .year-divider::after { background:linear-gradient(to right, rgba(255,159,67,0.25), transparent); }
+  .y26 .ticket::before { background:#FF9F43; }
+  .y26 .t-tier { background:rgba(255,159,67,0.12); color:#FF9F43; border:1px solid rgba(255,159,67,0.25); }
+
+  /* ── SCROLL ANCHOR OFFSET (accounts for fixed nav) ── */
+  #home, #proofs, #pricing, #contact { scroll-margin-top:80px; }
+
+  /* ── DISCLAIMER BAR ── */
+  .more-bar {
+    position:relative; z-index:1; margin:0 24px;
+    border:1px solid rgba(255,255,255,0.06); border-top:none;
+    background:#0a0a0a; padding:14px 18px; display:flex; align-items:flex-start; gap:10px;
+  }
+  .more-dot { width:7px; height:7px; border-radius:50%; background:#FFD93D; flex-shrink:0; margin-top:3px; }
+  .more-text { font-size:12px; color:rgba(255,255,255,0.38); font-style:italic; line-height:1.6; }
+  .more-text strong { color:rgba(255,255,255,0.65); font-style:normal; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1px; background:rgba(255,255,255,0.06);
+    margin:1px 24px 0; border:1px solid rgba(255,255,255,0.06); border-top:none;
+  }
+  .stat { background:#0f0f0f; padding:28px 16px; text-align:center; }
+  .stat-num { font-family:'Bebas Neue', sans-serif; font-size:58px; color:#FFD93D; line-height:1; }
+  .stat-label { font-size:10px; color:rgba(255,255,255,0.32); letter-spacing:1.5px; text-transform:uppercase; font-family:'Space Mono', monospace; margin-top:5px; }
+
+  /* ── COLOUR LEGEND ── */
+  .legend { position:relative; z-index:1; display:flex; gap:18px; flex-wrap:wrap; padding:12px 28px; }
+  .leg-item { display:flex; align-items:center; gap:7px; font-family:'Space Mono', monospace; font-size:10px; letter-spacing:1px; color:rgba(255,255,255,0.32); }
+  .leg-dot { width:9px; height:9px; border-radius:50%; }
+
+  /* ── BTS WAITLIST BOX ── */
+  .waitlist-box {
+    position:relative; z-index:1; margin:20px 24px 0;
+    border:1px solid rgba(255,75,75,0.28); background:rgba(255,75,75,0.04); padding:28px 28px 24px;
+  }
+  .waitlist-eyebrow { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:3px; color:#FF4B4B; margin-bottom:14px; text-transform:uppercase; }
+  .waitlist-title { font-family:'Bebas Neue', sans-serif; font-size:64px; color:#fff; letter-spacing:1.5px; line-height:1.05; margin-bottom:8px; }
+  .waitlist-title .red { color:#FF4B4B; }
+  .waitlist-sub { font-size:14px; color:rgba(255,255,255,0.54); line-height:1.6; margin-bottom:6px; }
+  .waitlist-count { font-family:'Bebas Neue', sans-serif; font-size:88px; color:#FF4B4B; line-height:1; }
+  .waitlist-unit { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px; color:rgba(255,75,75,0.55); margin-bottom:16px; }
+  .asia-stops { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+  .stop-pill { font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1px; padding:5px 13px; border:1px solid rgba(255,75,75,0.22); color:rgba(255,75,75,0.65); border-radius:2px; }
+  .stop-pill.ph { border-color:rgba(255,75,75,0.55); color:#FF4B4B; background:rgba(255,75,75,0.08); }
+
+  /* ── NOW ACCEPTING TPA ── */
+  @keyframes pulse-border {
+    0%, 100% { border-color:rgba(110,231,183,0.5); box-shadow:0 0 0 0 rgba(110,231,183,0.15); }
+    50% { border-color:rgba(110,231,183,0.9); box-shadow:0 0 20px 3px rgba(110,231,183,0.1); }
+  }
+  @keyframes blink-dot { 0%, 100% { opacity:1; } 50% { opacity:0; } }
+
+  .now-accepting {
+    position:relative; z-index:1; margin:28px 24px 0;
+    border:1px solid rgba(110,231,183,0.5); background:rgba(110,231,183,0.04);
+    padding:26px 26px 24px; animation:pulse-border 2.4s ease-in-out infinite;
+  }
+  .na-eyebrow { display:flex; align-items:center; gap:8px; font-family:'Space Mono', monospace; font-size:10px; letter-spacing:3px; color:#6EE7B7; margin-bottom:16px; text-transform:uppercase; }
+  .na-live-dot { width:8px; height:8px; border-radius:50%; background:#6EE7B7; flex-shrink:0; animation:blink-dot 1.2s ease-in-out infinite; }
+  .na-title { font-family:'Bebas Neue', sans-serif; font-size:32px; color:#fff; letter-spacing:1.5px; margin-bottom:16px; line-height:1; }
+  .na-title span { color:#6EE7B7; }
+  .na-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
+  @media (max-width:500px) { .na-grid { grid-template-columns:1fr; } }
+  .na-card {
+    background:#0f0f0f; border:1px solid rgba(110,231,183,0.18);
+    padding:20px 20px 18px; position:relative; overflow:hidden;
+    transition:background 0.18s, border-color 0.18s, transform 0.18s;
+    cursor:pointer; text-decoration:none; display:block; color:inherit;
+  }
+  .na-card:hover { background:#161616; border-color:rgba(110,231,183,0.5); transform:translateY(-2px); }
+  .na-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:#6EE7B7; }
+  .na-card-arrow { display:block; margin-top:12px; font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1.5px; color:rgba(110,231,183,0.55); transition:color 0.18s, letter-spacing 0.18s; }
+  .na-card:hover .na-card-arrow { color:#6EE7B7; letter-spacing:2.5px; }
+  .na-artist { font-family:'Bebas Neue', sans-serif; font-size:28px; letter-spacing:1px; color:#fff; line-height:1; margin-bottom:4px; }
+  .na-tour { font-size:12px; color:rgba(255,255,255,0.42); font-weight:300; line-height:1.4; margin-bottom:9px; }
+  .na-date { font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1px; color:rgba(110,231,183,0.8); margin-bottom:4px; }
+  .na-venue { font-size:10px; color:rgba(255,255,255,0.3); font-weight:300; margin-bottom:9px; }
+  .na-slots { display:inline-block; font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1px; font-weight:700; padding:3px 10px; border-radius:1px; background:rgba(110,231,183,0.14); color:#6EE7B7; border:1px solid rgba(110,231,183,0.3); }
+  .na-note { font-size:12px; color:rgba(255,255,255,0.35); font-style:italic; line-height:1.6; border-top:1px solid rgba(255,255,255,0.06); padding-top:14px; margin-top:6px; }
+  .na-note strong { color:rgba(255,255,255,0.6); font-style:normal; }
+
+  /* ── CAPTION / CTA BOX — centered ── */
+  .caption-box { position:relative; z-index:1; margin:24px 24px; border:1px solid rgba(255,255,255,0.07); padding:32px 36px; background:#0a0a0a; text-align:center; }
+  .caption-text { font-size:15px; color:rgba(255,255,255,0.55); line-height:2.1; font-weight:300; }
+  .caption-text strong { color:#fff; font-weight:500; }
+  .caption-cta { margin-top:22px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2.5px; }
+  .caption-cta a { color:#FFD93D; text-decoration:none; border:1px solid rgba(255,217,61,0.3); padding:9px 18px; border-radius:2px; transition:all 0.18s; }
+  .caption-cta a:hover { background:rgba(255,217,61,0.08); border-color:#FFD93D; }
+
+  /* ── FOOTER HANDLE ── */
+  .handle { position:relative; z-index:1; text-align:center; padding:28px 24px 0; font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:6px; color:rgba(255,255,255,0.1); }
+</style>
+</head>
+<body>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">JIEUN<span>TICKETS</span></a>
+    <div class="nav-links">
+      <a href="#home" class="active">HOME</a>
+      <a href="#proofs">PROOFS</a>
+      <a href="#pricing">PRICING</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMobile()">HOME</a>
+  <a href="#proofs" onclick="closeMobile()">PROOFS</a>
+  <a href="#pricing" onclick="closeMobile()">PRICING</a>
+  <a href="#contact" onclick="closeMobile()">CONTACT</a>
+</div>
+
+<div class="page">
+  <div class="spotlight"></div>
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="header" id="home">
+    <div class="eyebrow">Ticket Success Archive</div>
+    <div class="main-title">
+      EVERY<br>
+      <span class="gold">TICKET.</span><br>
+      SECURED.
+    </div>
+    <div class="est-badge">JIEUN TICKET ASSISTANCE · EST. 2022</div>
+    <div class="subtitle">A Ticket Closer to Breathing the Same Air as Your Bias</div>
+  </div>
+
+  <!-- ═══ PROOF ARCHIVE ═══ -->
+  <div id="proofs">
+    <div class="section-heading">
+      <div class="section-heading-text">PROOF <span>ARCHIVE</span></div>
+    </div>
+
+    <!-- Year filter -->
+    <div class="filter-row">
+      <button class="filter-btn active" data-year="all">All Years</button>
+      <button class="filter-btn" data-year="26">2026</button>
+      <button class="filter-btn" data-year="25">2025</button>
+      <button class="filter-btn" data-year="24">2024</button>
+      <button class="filter-btn" data-year="23">2023</button>
+      <button class="filter-btn" data-year="22">2022</button>
+    </div>
+    <div class="section-label" id="era-label">Past &amp; Completed Events — These are just some of them</div>
+
+    <!-- ── Year groups ── -->
+    <div class="proof-archive" id="concert-grid">
+
+      <!-- 2026 -->
+      <div class="year-group y26" data-year="26">
+        <div class="year-divider">
+          <span class="year-divider-label">2026</span>
+          <span class="year-divider-count">11 EVENTS</span>
+        </div>
+        <div class="year-cards">
+          <div class="ticket"><div class="t-artist">BTS</div><div class="t-tour">World Tour 'Arirang' · Goyang</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">BTS</div><div class="t-tour">World Tour 'Arirang' · Madrid</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">SB19</div><div class="t-tour">Wakas at Simula Trilogy Finale · SMDC</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">TXT</div><div class="t-tour">Wonders at 5:53 – Dunkin' &amp; TXT Fun Meet · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">WENDY</div><div class="t-tour">1st World Tour &lt;W:EALIVE&gt; · New Frontier Theater</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">KIM SEJEONG</div><div class="t-tour">Fan Concert &lt;Tenth Letter&gt; · New Frontier Theater</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">ATEEZ</div><div class="t-tour">2026 World Tour [In Your Fantasy] · Araneta</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">LAUFEY</div><div class="t-tour">A Matter of Time Tour in Manila · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">ITZY</div><div class="t-tour">3RD WORLD TOUR &lt;TUNNEL VISION&gt; · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">Cup of Joe</div><div class="t-tour">Sandali: The Cup of Joe Fest · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">LANY</div><div class="t-tour">soft world tour · Bulacan &amp; Cebu</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+        </div>
+      </div>
+
+      <!-- 2025 -->
+      <div class="year-group y25" data-year="25">
+        <div class="year-divider">
+          <span class="year-divider-label">2025</span>
+          <span class="year-divider-count">9 EVENTS</span>
+        </div>
+        <div class="year-cards">
+          <div class="ticket"><div class="t-artist">NIKI</div><div class="t-tour">BUZZ World Tour · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">G-DRAGON</div><div class="t-tour">Übermensch World Tour · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">ENHYPEN</div><div class="t-tour">Walk The Line World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">TWICE</div><div class="t-tour">THIS IS FOR World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">SEVENTEEN</div><div class="t-tour">NEW_ World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">BLACKPINK</div><div class="t-tour">Deadline World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">J-HOPE</div><div class="t-tour">Hope On The Stage · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">SB19</div><div class="t-tour">Wakas at Simula Trilogy · SMDC</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">UAAP CDC</div><div class="t-tour">Cheerdance Competition · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+        </div>
+      </div>
+
+      <!-- 2024 -->
+      <div class="year-group y24" data-year="24">
+        <div class="year-divider">
+          <span class="year-divider-label">2024</span>
+          <span class="year-divider-count">7 EVENTS</span>
+        </div>
+        <div class="year-cards">
+          <div class="ticket"><div class="t-artist">IU</div><div class="t-tour">HEREH World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">NCT DREAM</div><div class="t-tour">The Dream Show 3 · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">BINI</div><div class="t-tour">Grand Biniverse Concert · Araneta</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">OLIVIA RODRIGO</div><div class="t-tour">GUTS World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">2NE1</div><div class="t-tour">Welcome Back Asia Tour · MOA Arena</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">NE-YO</div><div class="t-tour">Champagne &amp; Roses Tour · Araneta</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">UAAP</div><div class="t-tour">Season 86 · CDC &amp; Finals</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+        </div>
+      </div>
+
+      <!-- 2023 -->
+      <div class="year-group y23" data-year="23">
+        <div class="year-divider">
+          <span class="year-divider-label">2023</span>
+          <span class="year-divider-count">6 EVENTS</span>
+        </div>
+        <div class="year-cards">
+          <div class="ticket"><div class="t-artist">TWICE</div><div class="t-tour">5th World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">COLDPLAY</div><div class="t-tour">Music of the Spheres · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">ED SHEERAN</div><div class="t-tour">Mathematics Tour · SMDC</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">SEVENTEEN</div><div class="t-tour">Follow Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">NCT 127</div><div class="t-tour">Neo City: The Unity · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+          <div class="ticket"><div class="t-artist">ENHYPEN</div><div class="t-tour">World Tour FATE · Clark</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+        </div>
+      </div>
+
+      <!-- 2022 -->
+      <div class="year-group y22" data-year="22">
+        <div class="year-divider">
+          <span class="year-divider-label">2022</span>
+          <span class="year-divider-count">1 EVENT</span>
+        </div>
+        <div class="year-cards">
+          <div class="ticket"><div class="t-artist">BLACKPINK</div><div class="t-tour">BORN PINK World Tour · Bulacan</div><span class="t-tier">MULTIPLE SECTIONS</span></div>
+        </div>
+      </div>
+
+    </div><!-- /concert-grid -->
+  </div><!-- /#proofs -->
+
+  <!-- ═══ DISCLAIMER BAR ═══ -->
+  <div class="more-bar">
+    <div class="more-dot"></div>
+    <div class="more-text">
+      <strong>These are just some of the events we've assisted with.</strong>
+      Many more concerts, meets, and events have been handled — some not posted out of respect for our clients' privacy.
+    </div>
+  </div>
+
+  <!-- ═══ STATS BAR ═══ -->
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">4+</div><div class="stat-label">Years Active</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Delivered</div></div>
+    <div class="stat"><div class="stat-num">PH+</div><div class="stat-label">Overseas Too</div></div>
+  </div>
+
+  <!-- ═══ COLOUR LEGEND ═══ -->
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#FF6B6B"></div>2022</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#4ECDC4"></div>2023</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#A78BFA"></div>2024</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#FFD93D"></div>2025</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#FF9F43"></div>2026</div>
+  </div>
+
+  <!-- ═══ NOW ACCEPTING TPA ═══ -->
+  <div id="pricing">
+    <div class="section-heading">
+      <div class="section-heading-text">NOW <span>ACCEPTING</span></div>
+    </div>
+    <div class="now-accepting">
+      <div class="na-eyebrow"><div class="na-live-dot"></div>Now Accepting TPA · Slots Available</div>
+      <div class="na-title">OPEN FOR <span>TICKET ASSISTANCE</span></div>
+      <div class="na-grid">
+        <a class="na-card" href="dc.html">
+          <div class="na-artist">DANIEL CAESAR</div>
+          <div class="na-tour">Son of Splergy Tour 2026 in Manila</div>
+          <div class="na-date">📅 MAY 19 (TUES)</div>
+          <div class="na-venue">SM Mall of Asia Arena</div>
+          <span class="na-slots">SLOTS AVAILABLE</span>
+          <span class="na-card-arrow">→ VIEW TPA RATES</span>
+        </a>
+        <a class="na-card" href="exo.html">
+          <div class="na-artist">EXO</div>
+          <div class="na-tour">EXO Planet #6 — EXhOrizon in Manila</div>
+          <div class="na-date">📅 JUL 4 (SAT) 6PM · JUL 5 (SUN) 5PM</div>
+          <div class="na-venue">SM Mall of Asia Arena</div>
+          <span class="na-slots">SLOTS AVAILABLE</span>
+          <span class="na-card-arrow">→ VIEW TPA RATES</span>
+        </a>
+        <a class="na-card" href="bini.html">
+          <div class="na-artist">BINI</div>
+          <div class="na-tour">SIGNALS — Anniversary Celebration</div>
+          <div class="na-date">📅 JUNE 20 (SAT) 7:30PM</div>
+          <div class="na-venue">SM Mall of Asia Arena</div>
+          <span class="na-slots">SLOTS AVAILABLE</span>
+          <span class="na-card-arrow">→ VIEW TPA RATES</span>
+        </a>        
+        <a class="na-card" href="posty.html">
+          <div class="na-artist">POST MALONE</div>
+          <div class="na-tour">The BIG ASS World Tour in Manila</div>
+          <div class="na-date">📅 SEPT 29 (TUES)</div>
+          <div class="na-venue">TBA</div>
+          <span class="na-slots">SLOTS AVAILABLE</span>
+          <span class="na-card-arrow">→ VIEW TPA RATES</span>
+        </a>
+      </div>
+      <div class="na-note"><strong>Explore concert rates above or join our Discord for complete details and updates.</strong></div>
+    </div>
+
+    <div class="waitlist-box">
+      <div class="waitlist-eyebrow">⚡ Upcoming · Now Accepting</div>
+      <div class="waitlist-title">BTS <span class="red">WORLD TOUR 'ARIRANG'</span><br>MANILA 2027</div>
+      <div class="waitlist-sub">Waitlist is already growing fast. Secure your spot now before slots fill up.</div>
+      <div class="waitlist-count">200+</div>
+      <div class="waitlist-unit">CLIENTS ALREADY WAITLISTED</div>
+      <div class="asia-stops">
+        <span class="stop-pill ph">📍 Manila, PH</span>
+        <span class="stop-pill">Busan</span>
+        <span class="stop-pill">Singapore</span>
+        <span class="stop-pill">Kaohsiung</span>
+        <span class="stop-pill">Hong Kong</span>
+        <span class="stop-pill">+ More Asia Stops</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CONTACT / CTA ═══ -->
+  <div id="contact">
+    <div class="section-heading">
+      <div class="section-heading-text">GET IN <span>TOUCH</span></div>
+    </div>
+    <div class="caption-box">
+      <div class="caption-text">
+        <strong>Don't Risk Missing Out. Let Us Secure It For You.</strong><br>
+        Since 2022, we've successfully assisted thousands of clients in securing tickets for
+        concerts, sports events, and live shows — from K-pop to OPM to Western artists.<br>
+        📍 Philippines-based | Assisting local &amp; select international events<br>
+        <strong>Loyalty Discounts for Our Suki Clients.</strong>
+      </div>
+      <div class="caption-cta">
+        <a href="https://discord.gg/7PDQDMAsAP" target="_blank" rel="noopener">→ DISCORD</a>
+        <a href="https://facebook.com/OfficialJieunTickets" target="_blank" rel="noopener">→ FACEBOOK</a>
+        <a href="https://x.com/JieunTickets" target="_blank" rel="noopener">→ X / TWITTER</a>
+        <a href="https://instagram.com/jieuntickets" target="_blank" rel="noopener">→ INSTAGRAM</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="handle">@JIEUNTICKETS</div>
+</div>
+
+<script>
+const btn = document.getElementById('hamburgerBtn');
+const menu = document.getElementById('mobileMenu');
+btn.addEventListener('click', () => menu.classList.toggle('open'));
+function closeMobile() { menu.classList.remove('open'); }
+
+// ── YEAR FILTER — targets .year-group[data-year] ──
+const LABELS = {
+  all: 'Past & Completed Events — These are just some of them',
+  '22': '2022 — Where It All Started',
+  '23': '2023 — Building the Track Record',
+  '24': '2024 — Going Mainstream',
+  '25': '2025 — Unstoppable',
+  '26': '2026 — Still Securing',
+};
+
+document.querySelectorAll('.filter-btn').forEach(b => {
+  b.addEventListener('click', function () {
+    const year = this.dataset.year;
+    document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    document.querySelectorAll('.year-group').forEach(grp => {
+      if (year === 'all') { grp.classList.remove('hidden'); }
+      else { grp.classList.toggle('hidden', grp.dataset.year !== year); }
+    });
+    document.getElementById('era-label').textContent = LABELS[year] || '';
+  });
+});
+
+// ── SCROLL SPY ──
+// Uses getBoundingClientRect (viewport-relative) so offsetTop quirks don't matter.
+// Also force-activates 'contact' when scrolled to the bottom of the page.
+const sections = ['home','proofs','pricing','contact'];
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  // Force contact when at page bottom
+  const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 60;
+  if (atBottom) {
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#contact'));
+    return;
+  }
+
+  let current = 'home';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    // Section is "active" once its top edge crosses 120px from viewport top
+    if (el.getBoundingClientRect().top <= 120) current = id;
+  });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}, { passive:true });
+</script>
+</body>
+</html>
