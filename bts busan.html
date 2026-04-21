@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BTS World Tour 'Arirang' in Busan — Rates | Jieun Ticket Assistance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { background:#050505; scroll-behavior:smooth; }
+  body { background:#080808; font-family:'DM Sans', sans-serif; color:#fff; min-height:100vh; }
+
+  /* ── STICKY NAV ── */
+  .site-nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(8,8,8,0.55);
+    backdrop-filter:blur(24px) saturate(160%); -webkit-backdrop-filter:blur(24px) saturate(160%);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    height:68px; display:flex; align-items:center;
+  }
+  .nav-inner {
+    width:100%; max-width:900px; margin:0 auto;
+    padding:0 28px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:26px; letter-spacing:3px; color:#fff; text-decoration:none;
+  }
+  .nav-logo span { color:#FFD93D; }
+  .nav-links { display:flex; gap:4px; }
+  .nav-links a {
+    font-family:'Space Mono', monospace;
+    font-size:10px; letter-spacing:2.5px; text-transform:uppercase;
+    color:rgba(255,255,255,0.42); text-decoration:none;
+    padding:8px 16px; border-radius:2px;
+    border:1px solid transparent; transition:all 0.18s;
+  }
+  .nav-links a:hover { color:#FFD93D; border-color:rgba(255,217,61,0.3); background:rgba(255,217,61,0.05); }
+  .nav-links a.active { color:#FFD93D; border-color:rgba(255,217,61,0.4); background:rgba(255,217,61,0.07); }
+  .nav-hamburger {
+    display:none; flex-direction:column; gap:5px; cursor:pointer;
+    background:none; border:none; padding:4px;
+  }
+  .nav-hamburger span { display:block; width:24px; height:2px; background:rgba(255,255,255,0.5); border-radius:2px; }
+  .nav-mobile-menu {
+    display:none; position:fixed; top:68px; left:0; right:0; z-index:99;
+    background:rgba(8,8,8,0.88); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+    border-bottom:1px solid rgba(255,255,255,0.07);
+    padding:16px 28px 20px; flex-direction:column; gap:4px;
+  }
+  .nav-mobile-menu a {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:2.5px;
+    color:rgba(255,255,255,0.5); text-decoration:none; padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,0.05); transition:color 0.18s;
+  }
+  .nav-mobile-menu a:hover { color:#FFD93D; }
+  .nav-mobile-menu.open { display:flex; }
+  @media (max-width:600px) {
+    .nav-links { display:none; }
+    .nav-hamburger { display:flex; }
+  }
+
+  /* ── PAGE WRAPPER ── */
+  .page { max-width:900px; margin:0 auto; padding:68px 0 60px; position:relative; }
+  .page::before {
+    content:''; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:0;
+  }
+  .spotlight {
+    position:absolute; top:-100px; left:50%; transform:translateX(-50%);
+    width:900px; height:540px;
+    background:radial-gradient(ellipse at center, rgba(255,75,75,0.1) 0%, rgba(255,100,80,0.03) 42%, transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+
+  /* ── BACK BUTTON ── */
+  .back-btn {
+    position:relative; z-index:1; display:inline-flex; align-items:center; gap:8px;
+    margin:28px 24px 0; font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    color:rgba(255,255,255,0.4); text-decoration:none; border:1px solid rgba(255,255,255,0.1);
+    padding:8px 16px; border-radius:2px; transition:all 0.18s;
+  }
+  .back-btn:hover { color:#FFD93D; border-color:rgba(255,217,61,0.4); }
+
+  /* ── CONCERT HEADER ── */
+  .concert-header {
+    position:relative; z-index:1; padding:36px 24px 32px;
+    border-bottom:1px solid rgba(255,255,255,0.07);
+  }
+  .ch-eyebrow {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:4px;
+    color:#FF4B4B; text-transform:uppercase; margin-bottom:14px;
+  }
+  .ch-artist {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(64px,14vw,110px); color:#fff;
+    letter-spacing:2px; line-height:0.88; margin-bottom:10px;
+  }
+  .ch-tour { font-size:15px; color:rgba(255,255,255,0.45); font-weight:300; letter-spacing:0.5px; margin-bottom:22px; }
+  .ch-meta { display:flex; flex-wrap:wrap; gap:10px; }
+  .ch-pill { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:1px; padding:6px 15px; border-radius:2px; }
+  .ch-pill.date { background:rgba(255,75,75,0.1); border:1px solid rgba(255,75,75,0.3); color:#FF4B4B; }
+  .ch-pill.venue { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.5); }
+  .ch-pill.slots { background:rgba(255,217,61,0.1); border:1px solid rgba(255,217,61,0.3); color:#FFD93D; }
+
+  /* ── SALE DATE BANNER ── */
+  @keyframes pulse-border {
+    0%, 100% { border-color:rgba(255,75,75,0.4); box-shadow:0 0 0 0 rgba(255,75,75,0.1); }
+    50% { border-color:rgba(255,75,75,0.8); box-shadow:0 0 16px 2px rgba(255,75,75,0.08); }
+  }
+  @keyframes blink-dot { 0%, 100% { opacity:1; } 50% { opacity:0; } }
+
+  .sale-banner {
+    position:relative; z-index:1; margin:0 24px;
+    border:1px solid rgba(255,75,75,0.4); background:rgba(255,75,75,0.04);
+    padding:22px 26px; animation:pulse-border 2.4s ease-in-out infinite;
+  }
+  .sale-banner-eyebrow {
+    display:flex; align-items:center; gap:8px;
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:3px;
+    color:#FF4B4B; margin-bottom:16px; text-transform:uppercase;
+  }
+  .sale-live-dot { width:8px; height:8px; border-radius:50%; background:#FF4B4B; flex-shrink:0; animation:blink-dot 1.2s ease-in-out infinite; }
+  .sale-dates { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:500px) { .sale-dates { grid-template-columns:1fr; } }
+  .sale-date-card { background:#0f0f0f; border:1px solid rgba(255,75,75,0.15); padding:16px 18px; }
+  .sale-date-type { font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px; color:rgba(255,75,75,0.7); text-transform:uppercase; margin-bottom:6px; }
+  .sale-date-val { font-family:'Bebas Neue', sans-serif; font-size:20px; letter-spacing:1px; color:#fff; line-height:1.1; }
+  .sale-date-time { font-family:'Space Mono', monospace; font-size:11px; color:#FF4B4B; margin-top:4px; }
+
+  /* ── SECTION HEADINGS ── */
+  .sec-label {
+    position:relative; z-index:1; font-family:'Space Mono', monospace; font-size:10px;
+    letter-spacing:3px; color:rgba(255,255,255,0.28); text-transform:uppercase; padding:26px 28px 14px;
+  }
+  .section-heading {
+    position:relative; z-index:1; padding:40px 28px 10px;
+    display:flex; align-items:center; gap:16px;
+  }
+  .section-heading::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.07); }
+  .section-heading-text { font-family:'Bebas Neue', sans-serif; font-size:32px; letter-spacing:2px; color:#fff; white-space:nowrap; }
+  .section-heading-text span { color:#FF4B4B; }
+
+  /* ── SEAT PLAN ── */
+  .seatplan-block {
+    position:relative; z-index:1; margin:0 24px;
+    border:1px solid rgba(255,255,255,0.07); background:#0a0a0a; overflow:hidden;
+  }
+  .seatplan-label {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px;
+    color:rgba(255,255,255,0.25); text-transform:uppercase;
+    padding:13px 18px 11px; border-bottom:1px solid rgba(255,255,255,0.05);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .seatplan-label span { color:rgba(255,75,75,0.6); }
+  .seatplan-img-wrap {
+    display:flex; align-items:center; justify-content:center;
+    min-height:260px; padding:0; position:relative;
+  }
+  .seatplan-img-wrap img {
+    display:none;
+    width:100%; height:auto; max-height:560px;
+    object-fit:contain; background:#0a0a0a;
+  }
+  .seatplan-empty {
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px; min-height:260px; padding:40px 24px; text-align:center;
+  }
+  .seatplan-empty svg { opacity:0.15; }
+  .seatplan-empty-text {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px;
+    color:rgba(255,255,255,0.2); text-transform:uppercase; line-height:2;
+  }
+  .seatplan-caption {
+    padding:11px 18px 13px;
+    font-size:12px; color:rgba(255,255,255,0.3); line-height:1.6;
+    border-top:1px solid rgba(255,255,255,0.05);
+  }
+
+  /* ── FEE TABLE ── */
+  .fee-table { position:relative; z-index:1; margin:0 24px; border:1px solid rgba(255,255,255,0.07); overflow:hidden; }
+  .fee-row {
+    display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;
+    padding:20px 22px; border-bottom:1px solid rgba(255,255,255,0.05);
+    background:#0f0f0f; transition:background 0.15s;
+  }
+  .fee-row:last-child { border-bottom:none; }
+  .fee-row:hover { background:#141414; }
+  .fee-row.header { background:#0a0a0a; padding:12px 22px; cursor:default; }
+  .fee-row.header:hover { background:#0a0a0a; }
+  .fr-section { font-family:'Bebas Neue', sans-serif; font-size:26px; letter-spacing:1px; color:#fff; }
+  .fr-section-sub { font-size:12px; color:rgba(255,255,255,0.35); font-weight:300; margin-top:2px; }
+  .fr-price { font-family:'Space Mono', monospace; font-size:17px; font-weight:700; color:#FFD93D; text-align:right; white-space:nowrap; }
+  .fr-price span { font-size:10px; font-weight:400; color:rgba(255,255,255,0.3); display:block; text-align:right; margin-top:3px; }
+  .col-label { font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px; color:rgba(255,255,255,0.25); text-transform:uppercase; }
+
+  /* ── ALL-IN BADGE ── */
+  .all-in-badge {
+    position:relative; z-index:1; margin:0 24px;
+    background:rgba(255,75,75,0.07); border:1px solid rgba(255,75,75,0.2);
+    border-top:none; padding:13px 22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .aib-dot { width:7px; height:7px; border-radius:50%; background:#FF4B4B; flex-shrink:0; }
+  .aib-text { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:1.5px; color:rgba(255,75,75,0.8); line-height:1.7; }
+  .aib-text strong { color:#FF4B4B; }
+
+  /* ── WHAT'S INCLUDED ── */
+  .include-box { position:relative; z-index:1; margin:0 24px; border:1px solid rgba(255,255,255,0.07); background:#0a0a0a; padding:22px 26px; }
+  .include-item { display:flex; gap:13px; align-items:flex-start; padding:9px 0; }
+  .include-item + .include-item { border-top:1px solid rgba(255,255,255,0.04); }
+  .inc-icon { flex-shrink:0; width:22px; height:22px; border-radius:50%; background:rgba(255,75,75,0.12); border:1px solid rgba(255,75,75,0.25); display:flex; align-items:center; justify-content:center; font-size:10px; margin-top:2px; }
+  .inc-text { font-size:14px; color:rgba(255,255,255,0.55); line-height:1.6; }
+  .inc-text strong { color:#fff; font-weight:500; }
+
+  /* ── NOTES BOX ── */
+  .notes-box { position:relative; z-index:1; margin:0 24px; border:1px solid rgba(255,217,61,0.15); background:rgba(255,217,61,0.03); padding:20px 24px; }
+  .note-item { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.9; padding:3px 0; }
+  .note-item::before { content:'⚠ '; color:#FFD93D; font-size:11px; }
+
+  /* ── CTA BOX ── */
+  .cta-box { position:relative; z-index:1; margin:0 24px; background:#0a0a0a; border:1px solid rgba(255,255,255,0.07); padding:30px; text-align:center; }
+  .cta-text { font-size:14px; color:rgba(255,255,255,0.45); margin-bottom:20px; line-height:1.8; }
+  .cta-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .cta-link { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px; color:#FFD93D; text-decoration:none; border:1px solid rgba(255,217,61,0.3); padding:10px 20px; border-radius:2px; transition:all 0.18s; }
+  .cta-link:hover { background:rgba(255,217,61,0.08); border-color:#FFD93D; }
+
+  /* ── HANDLE ── */
+  .handle { position:relative; z-index:1; text-align:center; padding:30px 24px 0; font-family:'Bebas Neue', sans-serif; font-size:24px; letter-spacing:6px; color:rgba(255,255,255,0.1); }
+</style>
+</head>
+<body>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">JIEUN<span>TICKETS</span></a>
+    <div class="nav-links">
+      <a href="index.html#home">HOME</a>
+      <a href="index.html#proofs">PROOFS</a>
+      <a href="index.html#pricing" class="active">PRICING</a>
+      <a href="index.html#contact">CONTACT</a>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="index.html#home" onclick="closeMobile()">HOME</a>
+  <a href="index.html#proofs" onclick="closeMobile()">PROOFS</a>
+  <a href="index.html#pricing" onclick="closeMobile()">PRICING</a>
+  <a href="index.html#contact" onclick="closeMobile()">CONTACT</a>
+</div>
+
+<div class="page">
+  <div class="spotlight"></div>
+
+  <a class="back-btn" href="index.html">← BACK TO ARCHIVE</a>
+
+  <!-- ═══ CONCERT HEADER ═══ -->
+  <div class="concert-header">
+    <div class="ch-eyebrow">Now Accepting · 2026 · Overseas Concert</div>
+    <div class="ch-artist">BTS</div>
+    <div class="ch-tour">World Tour 'Arirang' in Busan</div>
+    <div class="ch-meta">
+      <span class="ch-pill date">📅 JUN 12 (FRI) · JUN 13 (SAT)</span>
+      <span class="ch-pill venue">Busan Asiad Main Stadium</span>
+      <span class="ch-pill slots">SLOTS AVAILABLE</span>
+    </div>
+  </div>
+
+  <!-- ═══ TICKET SALE DATES ═══ -->
+  <div class="section-heading">
+    <div class="section-heading-text">SALE <span>SCHEDULE</span></div>
+  </div>
+  <div class="sale-banner">
+    <div class="sale-banner-eyebrow"><div class="sale-live-dot"></div>Ticket Sale Dates — Mark Your Calendar, ARMY</div>
+    <div class="sale-dates">
+      <div class="sale-date-card">
+        <div class="sale-date-type">📅 Weverse Presale</div>
+        <div class="sale-date-val">April 29, 2026</div>
+        <div class="sale-date-time">7:00 PM KST</div>
+      </div>
+      <div class="sale-date-card">
+        <div class="sale-date-type">📅 General Sale</div>
+        <div class="sale-date-val">April 30, 2026</div>
+        <div class="sale-date-time">7:00 PM KST</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SEAT PLAN MAP ═══ -->
+  <div class="section-heading">
+    <div class="section-heading-text">SEAT <span>PLAN</span></div>
+  </div>
+  <div class="seatplan-block">
+    <div class="seatplan-label">
+      Busan Asiad Main Stadium · World Tour 'Arirang' in Busan
+      <span>VENUE MAP</span>
+    </div>
+    <div class="seatplan-img-wrap" id="seatplanWrap">
+      <!-- ▼ Set src to seatplan image filename once available -->
+      <img id="seatplan-busan" src="seatplan-busan.jpg" alt="BTS World Tour Arirang Busan — Seat Plan"/>
+      <div class="seatplan-empty" id="seatplanEmpty" style="display:none;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="44" height="44" rx="3" stroke="white" stroke-width="1.5"/>
+          <path d="M4 36L16 24L22 30L33 19L48 36" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="16" cy="16" r="4.5" stroke="white" stroke-width="1.5"/>
+        </svg>
+        <div class="seatplan-empty-text">
+          Seat plan image coming soon.<br>
+          Check back before sale day.
+        </div>
+      </div>
+    </div>
+    <div class="seatplan-caption">
+      Seat plan is for reference only. Actual section availability may vary on sale day.
+      Always confirm your preferred section with us before booking.
+    </div>
+  </div>
+
+  <!-- ═══ PACKAGE RATES ═══ -->
+  <div class="section-heading">
+    <div class="section-heading-text">PACKAGE <span>RATES</span></div>
+  </div>
+  <div class="fee-table">
+    <div class="fee-row header">
+      <span class="col-label">Section / Tier</span>
+      <span class="col-label">All-In Price</span>
+    </div>
+    <div class="fee-row">
+      <div>
+        <div class="fr-section">Floor — Random SoundCheck</div>
+        <div class="fr-section-sub">Standing · Includes Soundcheck Entry</div>
+      </div>
+      <div class="fr-price">₱ 40,800<span>per ticket</span></div>
+    </div>
+    <div class="fee-row">
+      <div>
+        <div class="fr-section">R Section — Random</div>
+        <div class="fr-section-sub">Reserved Seating</div>
+      </div>
+      <div class="fr-price">₱ 31,300<span>per ticket</span></div>
+    </div>
+    <div class="fee-row">
+      <div>
+        <div class="fr-section">S Section — Random</div>
+        <div class="fr-section-sub">Reserved Seating</div>
+      </div>
+      <div class="fr-price">₱ 26,500<span>per ticket</span></div>
+    </div>
+  </div>
+  <div class="all-in-badge">
+    <div class="aib-dot"></div>
+    <div class="aib-text"><strong>ALL-IN PRICING.</strong> Rates above are inclusive of ticket face value and HTB (Help To Buy) fee. No hidden charges on top.</div>
+  </div>
+
+  <!-- ═══ WHAT'S INCLUDED ═══ -->
+  <div class="section-heading">
+    <div class="section-heading-text">WHAT'S <span>INCLUDED</span></div>
+  </div>
+  <div class="include-box">
+    <div class="include-item"><div class="inc-icon">✓</div><div class="inc-text"><strong>Ticket face value + HTB fee</strong> — All-in rate covers the ticket price and HTB fee. Nothing else to pay on top.</div></div>
+    <div class="include-item"><div class="inc-icon">✓</div><div class="inc-text"><strong>Queue assistance</strong> — We queue on your behalf for both Weverse Presale and General Sale.</div></div>
+    <div class="include-item"><div class="inc-icon">✓</div><div class="inc-text"><strong>Section targeting</strong> — We attempt random sections based on your seat tier.</div></div>
+    <div class="include-item"><div class="inc-icon">✓</div><div class="inc-text"><strong>Real-time updates</strong> — You'll be updated throughout the entire queuing and checkout process.</div></div>
+    <div class="include-item"><div class="inc-icon">✓</div><div class="inc-text"><strong>Full process guidance</strong> — We guide you from reservation to post-purchase ticket coordination.</div></div>
+  </div>
+
+  <!-- ═══ IMPORTANT NOTES ═══ -->
+  <div class="sec-label">Important Notes</div>
+  <div class="notes-box">
+    <div class="note-item">Full payment is required to confirm your slot before sale day.</div>
+    <div class="note-item">Refundable only if no tickets are successfully secured on both sale attempts.</div>
+    <div class="note-item">Sections are on a best-effort basis. Random sections mean no specific seat or row can be guaranteed.</div>
+    <div class="note-item">Slots are limited — all confirmed clients are assisted simultaneously on sale day.</div>
+    <div class="note-item">Loyalty discounts available for returning Suki clients. Ask us for details.</div>
+  </div>
+
+  <!-- ═══ CTA ═══ -->
+  <div class="section-heading">
+    <div class="section-heading-text">GET YOUR <span>SLOT</span></div>
+  </div>
+  <div class="cta-box">
+    <div class="cta-text">Ready to go to Busan, ARMY? DM us to lock in your slot.<br>Sale starts April 29. Slots fill fast — don't wait.</div>
+    <div class="cta-links">
+      <a class="cta-link" href="https://discord.gg/7PDQDMAsAP" target="_blank" rel="noopener">→ DISCORD</a>
+      <a class="cta-link" href="https://facebook.com/OfficialJieunTickets" target="_blank" rel="noopener">→ FACEBOOK</a>
+      <a class="cta-link" href="https://x.com/JieunTickets" target="_blank" rel="noopener">→ X / TWITTER</a>
+      <a class="cta-link" href="https://instagram.com/jieuntickets" target="_blank" rel="noopener">→ INSTAGRAM</a>
+    </div>
+  </div>
+
+  <div class="handle">@JIEUNTICKETS</div>
+</div>
+
+<script>
+// ── Nav hamburger ──
+const btn = document.getElementById('hamburgerBtn');
+const menu = document.getElementById('mobileMenu');
+btn.addEventListener('click', () => menu.classList.toggle('open'));
+function closeMobile() { menu.classList.remove('open'); }
+
+// ── Seat plan ──
+const seatImg   = document.getElementById('seatplanImg');
+const emptySlot = document.getElementById('seatplanEmpty');
+if (seatImg && emptySlot) {
+  if (!seatImg.src || seatImg.src === window.location.href) {
+    seatImg.style.display = 'none';
+    emptySlot.style.display = 'flex';
+  } else {
+    seatImg.addEventListener('load',  () => { seatImg.style.display = 'block'; emptySlot.style.display = 'none'; });
+    seatImg.addEventListener('error', () => { seatImg.style.display = 'none';  emptySlot.style.display = 'flex'; });
+  }
+}
+</script>
+</body>
+</html>
